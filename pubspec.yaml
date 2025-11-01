@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MovieCatalogApp());
@@ -10,11 +11,71 @@ class MovieCatalogApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Movie Catalog',
+      title: 'Palomitas al Microondas',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: const MovieHomePage(),
+      home: const SplashScreen(),
+    );
+  }
+}
+
+/// Pantalla de inicio (Splash Screen)
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    // Después de 3 segundos, navega a la página principal
+    Timer(const Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MovieHomePage()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.deepPurple[50],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Imagen principal
+            Image.network(
+              'https://static.vecteezy.com/system/resources/previews/005/417/591/non_2x/popcorn-movie-time-design-vector.jpg',
+              height: 250,
+            ),
+            const SizedBox(height: 30),
+            const Text(
+              '🍿 Bienvenido a',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+                color: Colors.deepPurple,
+              ),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Palomitas al Microondas',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -43,7 +104,7 @@ class MovieHomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            // Movie row
+            // Primera fila de películas
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
@@ -62,6 +123,7 @@ class MovieHomePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
+            // Segunda fila de películas
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
