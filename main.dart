@@ -33,11 +33,9 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
   late Future<List<Movie>> _peliculas;
 
   Future<List<Movie>> cargarPeliculas() async {
-    // Paso 5.1: leer archivo JSON local
     final String response = await rootBundle.loadString('assets/movies.json');
     final List<dynamic> data = json.decode(response);
 
-    // Paso 5.2: convertir en lista de objetos Movie
     return data.map((json) => Movie.fromJson(json)).toList();
   }
 
