@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MovieCatalogApp());
@@ -49,7 +49,6 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Imagen
             Image.network(
               'https://static.vecteezy.com/system/resources/previews/005/417/591/non_2x/popcorn-movie-time-design-vector.jpg',
               height: 250,
@@ -103,7 +102,6 @@ class MovieHomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            // Primera fila de películas
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
@@ -122,7 +120,6 @@ class MovieHomePage extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-            // Segunda fila de películas
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: const [
@@ -218,4 +215,3 @@ class MovieCard extends StatelessWidget {
     );
   }
 }
-
