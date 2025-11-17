@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'movie.dart'; //
+import 'movie.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  
+
   runApp(const CatalogoPeliculasApp());
 }
 
@@ -40,10 +41,13 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
   late Future<List<Movie>> _peliculas;
 
   Future<List<Movie>> cargarPeliculas() async {
-    final String response = await rootBundle.loadString('assets/movies.json');
-    final List<dynamic> data = json.decode(response);
+    final query = await FirebaseFirestore.instance
+        .collection('peliculas')
+        .get();
 
-    return data.map((json) => Movie.fromJson(json)).toList();
+    return query.docs
+        .map((doc) => Movie.fromJson(doc.data()))
+        .toList();
   }
 
   @override
@@ -85,8 +89,7 @@ class _ListaPeliculasState extends State<ListaPeliculas> {
                       fit: BoxFit.cover,
                     ),
                     title: Text(pelicula.title),
-                    subtitle: Text(
-                        '${pelicula.director} • ${pelicula.year.toString()}'),
+                    subtitle: Text('${pelicula.director} • ${pelicula.year.toString()}'),
                   ),
                 );
               },
